@@ -1,0 +1,66 @@
+import pandas as pd
+class Trade():
+    def __init__(self, TradeDate, Instrument, SideIsBuy, Quantity, Price):
+        self.TradeDate = TradeDate
+        self.Instrument = Instrument
+        self.SideIsBuy = SideIsBuy
+        self.Quantity = Quantity
+        self.Price = Price
+
+    def financeiro_total(self):
+        
+        Price = self.Price
+        SideIsBuy = "Venda"
+        
+        if self.SideIsBuy: 
+            Price = self.Price * -1
+            SideIsBuy = "Compra"
+        
+        total = Price * self.Quantity
+        
+        financeiro = { "TradeDate" : self.TradeDate,
+                       "Total" : total}
+        
+        return financeiro
+    
+    def posicao(self):
+        Instrument = self.Instrument
+        TradeDate = self.TradeDate
+        Quantity = self.Quantity
+        
+        posicao = {"TradeDate": TradeDate,
+                   "Instrument" : Instrument,
+                   "Quantity" : Quantity}
+        
+        return posicao
+
+data = {'TradeDate': ["20/08/2020", "21/08/2020", "22/08/2020", "23/08/2020", "20/08/2020", "21/08/2020"],
+        'Instrument': ["ITUB3", "VVAR3", "COGN3", "PETR4", "ITUB3", "CYRE3"],
+        'SideIsBuy': [False, True, True, False, True, False],
+        'Quantity': [20, 24, 60, 12, 10, 8],
+        'Price': [100, 200, 50, 30, 70, 50]}
+
+df = pd.DataFrame(data)
+df.head(10)
+
+lista_financeiro = []
+lista_posicao = []
+
+for index, row in df.iterrows():
+    
+    TradeDate = row['TradeDate']
+    Instrument = row['Instrument']
+    SideIsBuy = row['SideIsBuy']
+    Quantity = row['Quantity']
+    Price = row['Price']
+
+    lista_financeiro.append(Trade(TradeDate, Instrument, SideIsBuy, Quantity, Price).financeiro_total())
+    lista_posicao.append(Trade(TradeDate, Instrument, SideIsBuy, Quantity, Price).posicao())
+
+tabela_financeiro = pd.DataFrame(lista_financeiro)
+tabela_financeiro.head(6)
+tabela_financeiro.groupby('TradeDate').sum()
+
+tabela_posicao = pd.DataFrame(lista_posicao)
+tabela_posicao.head(6)
+tabela_posicao.groupby('Instrument').sum()
