@@ -1,0 +1,14 @@
+n = int(input('Digite um número inteiro: '))
+bin = bin(n)
+binnormal = bin[2:]
+print(f'O número binário de {n} é {binnormal}')
+inversobin = bin[:1:-1]
+if binnormal == inversobin:
+    print(f'O número binário {binnormal} é Palíndromo!')
+    print(f'{binnormal} = {inversobin}')
+else:
+    print(f'O número binário {binnormal} não é Palíndromo.')
+    print(f'O inverso de {binnormal} é {inversobin}.')
+    
+    # testes com os números 15 e 22.
+    # 15 tem binário Palíndromo, 22 não. 
