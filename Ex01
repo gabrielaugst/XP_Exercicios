@@ -1,0 +1,11 @@
+x = []
+nlista = int(input('Digite quantos números você deseja na lista: '))
+n = 0
+while len(x) < nlista:
+    n = int(input('Digite um número inteiro: '))
+    x.append(n)
+x = sorted(x)
+k = int(input('Digite um número inteiro qualquer (pode ser negativo): '))
+def rodar(x, k):
+    return x[k:] + x[:k]
+print(rodar(x, k))
